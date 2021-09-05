@@ -3,19 +3,19 @@ node {
     docker.image('node:latest').inside('--tmpfs /.config') {
       stage("Prepare") {
         checkout scm
-        sh 'npm ci'
+        sh 'yarn install'
       }
 
       stage("Test") {
-        sh 'nx affected --target=test --base=origin/main --parallel'
+        sh 'yarn nx affected --target=test --base=origin/main --parallel'
       }
 
       stage("Lint") {
-        sh 'nx affected --target=lint --base=origin/main --parallel'
+        sh 'yarn nx affected --target=lint --base=origin/main --parallel'
       }
 
       stage("Build") {
-        sh 'nx affected --target=build --base=origin/main --prod --parallel'
+        sh 'yarn nx affected --target=build --base=origin/main --prod --parallel'
       }
     }
   }
