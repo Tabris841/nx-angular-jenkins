@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    docker { image 'node:12' }
+    docker { image 'node:latest' }
   }
   stages {
     stage('Install') {
@@ -11,19 +11,19 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh 'npx nx affected --target=test --base=origin/main --parallel'
+        sh 'npx nx run-many --target=test --all'
       }
     }
 
     stage('Lint') {
       steps {
-        sh 'npx nx affected --target=lint --base=origin/main --parallel'
+        sh 'npx nx run-many --target=lint --all'
       }
     }
 
     stage('Build') {
       steps {
-        sh 'npx nx affected --target=build --base=origin/main --prod --parallel'
+        sh 'npx nx run-many --target=build --all --prod'
       }
     }
   }
