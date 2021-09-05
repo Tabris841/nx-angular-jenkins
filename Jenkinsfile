@@ -28,9 +28,9 @@ pipeline {
     }
 
     stage('Sonarqube') {
-			steps {
-				sh "npm run sonar"
-			}
+			withSonarQubeEnv('sonarqube-NEW') {
+					sh "npm run sonar"
+				}
 		}
   }
 }
