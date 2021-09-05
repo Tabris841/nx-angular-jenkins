@@ -7,15 +7,15 @@ node {
       }
 
       stage("Test") {
-        sh 'yarn nx run-many --target=test --all'
+        sh 'yarn nx affected --target=test --base=origin/master'
       }
 
       stage("Lint") {
-        sh 'yarn nx run-many --target=lint --all'
+        sh 'yarn nx affected --target=lint --base=origin/master'
       }
 
       stage("Build") {
-        sh 'yarn nx run-many --target=build --all --prod'
+        sh 'yarn nx affected --target=build --base=origin/master --prod'
       }
     }
   }
