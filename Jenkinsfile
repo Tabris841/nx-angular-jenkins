@@ -4,22 +4,27 @@ pipeline {
   }
   stages {
     stage('Install') {
-      steps { sh 'npm install' }
+      steps {
+        sh 'yarn install'
+      }
     }
 
     stage('Test') {
-      parallel {
-        stage('Static code analysis') {
-            steps { sh 'npm run-script lint' }
-        }
-        stage('Unit tests') {
-            steps { sh 'npm run-script test' }
-        }
+      steps {
+        sh 'yarn nx affected --target=test --base=origin/master --parallel'
+      }
+    }
+
+    stage('Lint') {
+      steps {
+        sh 'yarn nx affected --target=lint --base=origin/master --parallel'
       }
     }
 
     stage('Build') {
-      steps { sh 'npm run-script build' }
+      steps {
+        sh 'yarn nx affected --target=build --base=origin/master --prod --parallel'
+      }
     }
   }
 }
