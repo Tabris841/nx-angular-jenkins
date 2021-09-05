@@ -5,25 +5,25 @@ pipeline {
   stages {
     stage('Install') {
       steps {
-        sh 'yarn install'
+        sh 'npm ci'
       }
     }
 
     stage('Test') {
       steps {
-        sh 'yarn nx affected --target=test --base=origin/main --parallel'
+        sh 'nx affected --target=test --base=origin/main --parallel'
       }
     }
 
     stage('Lint') {
       steps {
-        sh 'yarn nx affected --target=lint --base=origin/main --parallel'
+        sh 'nx affected --target=lint --base=origin/main --parallel'
       }
     }
 
     stage('Build') {
       steps {
-        sh 'yarn nx affected --target=build --base=origin/main --prod --parallel'
+        sh 'nx affected --target=build --base=origin/main --prod --parallel'
       }
     }
   }
