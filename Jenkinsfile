@@ -11,19 +11,19 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh 'yarn nx affected --target=test --base=origin/master --parallel'
+        sh 'yarn nx affected --target=test --base=origin/main --parallel'
       }
     }
 
     stage('Lint') {
       steps {
-        sh 'yarn nx affected --target=lint --base=origin/master --parallel'
+        sh 'yarn nx affected --target=lint --base=origin/main --parallel'
       }
     }
 
     stage('Build') {
       steps {
-        sh 'yarn nx affected --target=build --base=origin/master --prod --parallel'
+        sh 'yarn nx affected --target=build --base=origin/main --prod --parallel'
       }
     }
   }
