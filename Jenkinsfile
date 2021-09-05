@@ -7,15 +7,15 @@ node {
       }
 
       stage("Test") {
-        sh 'yarn nx affected --target=test --base=origin/main'
+        sh 'yarn nx affected --target=test --base=origin/master --parallel'
       }
 
       stage("Lint") {
-        sh 'yarn nx affected --target=lint --base=origin/main'
+        sh 'yarn nx affected --target=lint --base=origin/master --parallel'
       }
 
       stage("Build") {
-        sh 'yarn nx affected --target=build --base=origin/main --prod'
+        sh 'yarn nx affected --target=build --base=origin/master --prod --parallel'
       }
     }
   }
