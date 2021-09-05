@@ -1,25 +1,25 @@
 pipeline {
-
   agent {
     docker { image 'node:latest' }
   }
-
   stages {
-    stage('Prepare') {
-      checkout scm
-      sh 'yarn install'
+    stage('Install') {
+      steps { sh 'npm install' }
     }
 
-    stage("Test") {
-      sh 'yarn nx affected --target=test --base=origin/main --parallel'
+    stage('Test') {
+      parallel {
+        stage('Static code analysis') {
+            steps { sh 'npm run-script lint' }
+        }
+        stage('Unit tests') {
+            steps { sh 'npm run-script test' }
+        }
+      }
     }
 
-    stage("Lint") {
-      sh 'yarn nx affected --target=lint --base=origin/main --parallel'
-    }
-
-    stage("Build") {
-      sh 'yarn nx affected --target=build --base=origin/main --prod --parallel'
+    stage('Build') {
+      steps { sh 'npm run-script build' }
     }
   }
 }
