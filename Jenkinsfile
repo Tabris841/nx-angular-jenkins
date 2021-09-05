@@ -29,7 +29,9 @@ pipeline {
 
     stage('Sonarqube') {
 			steps {
-				sh "npm run sonar"
+        withSonarQubeEnv("sonar.jmerle.dev") {
+          sh "npm run sonar"
+        }
       }
 		}
   }
